@@ -175,52 +175,93 @@ class KaliBrowser(QMainWindow):
     def apply_styles(self):
         self.setStyleSheet("""
             QMainWindow {
-                background-color: #f5f5f5;
+                background-color: #0d0d0d;
             }
             QToolBar {
-                background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
-                border-bottom: 1px solid #e0e0e0;
-                padding: 8px;
-                spacing: 5px;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #1a1a1a, stop:0.5 #161616, stop:1 #121212);
+                border-bottom: 2px solid #2a2a2a;
+                border-image: linear-gradient(90deg, #3a3a3a 0%, #4a9eff 50%, #3a3a3a 100%) 0 0 1 0;
+                padding: 10px;
+                spacing: 8px;
+                min-height: 50px;
             }
             QToolBar QAction {
-                font-size: 18px;
-                padding: 8px 12px;
-                margin: 0 2px;
+                font-size: 16px;
+                padding: 10px 14px;
+                margin: 0 3px;
+                color: #d0d0d0;
+                font-weight: 500;
             }
             QLineEdit {
-                border: 2px solid #e0e0e0;
-                border-radius: 20px;
-                padding: 8px 16px;
-                background-color: #ffffff;
+                border: 2px solid #3a3a3a;
+                border-radius: 24px;
+                padding: 10px 18px;
+                background-color: #1a1a1a;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #252525, stop:1 #1a1a1a);
                 font-size: 14px;
-                min-height: 20px;
+                color: #e0e0e0;
+                min-height: 22px;
+                selection-background-color: #4a9eff;
             }
             QLineEdit:focus {
-                border: 2px solid #4285f4;
-                background-color: #ffffff;
+                border: 2px solid #4a9eff;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #2a2a2a, stop:1 #1f1f1f);
+                color: #ffffff;
             }
             QTabWidget::pane {
                 border: none;
-                background-color: #ffffff;
+                background-color: #0d0d0d;
+            }
+            QTabBar {
+                background: #121212;
+                border-bottom: 1px solid #2a2a2a;
             }
             QTabBar::tab {
-                background: #e8e8e8;
-                border: 1px solid #d0d0d0;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #252525, stop:1 #1a1a1a);
+                border: 1px solid #2a2a2a;
                 border-bottom: none;
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
-                padding: 8px 16px;
-                margin-right: 2px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                padding: 10px 20px;
+                margin-right: 3px;
                 min-width: 150px;
-                max-width: 250px;
-            }
-            QTabBar::tab:selected {
-                background: #ffffff;
-                border-bottom: 2px solid #4285f4;
+                max-width: 280px;
+                color: #909090;
+                font-weight: 500;
             }
             QTabBar::tab:hover {
-                background: #f0f0f0;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #303030, stop:1 #252525);
+                color: #d0d0d0;
+            }
+            QTabBar::tab:selected {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #3a3a3a, stop:1 #2a2a2a);
+                border-bottom: 3px solid #4a9eff;
+                color: #ffffff;
+                font-weight: 600;
+            }
+            QPushButton {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #303030, stop:1 #1a1a1a);
+                border: 1px solid #3a3a3a;
+                border-radius: 6px;
+                color: #d0d0d0;
+                padding: 8px 14px;
+                font-weight: 500;
+            }
+            QPushButton:hover {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #404040, stop:1 #2a2a2a);
+                border: 2px solid #4a9eff;
+            }
+            QPushButton:pressed {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #1a1a1a, stop:1 #0d0d0d);
             }
         """)
 
@@ -274,13 +315,46 @@ class KaliBrowser(QMainWindow):
     def update_ssl_indicator(self, url):
         if url.startswith('https://'):
             self.ssl_indicator.setText("🔒")
-            self.ssl_indicator.setStyleSheet("QPushButton { border: none; font-size: 16px; color: #34a853; }")
+            self.ssl_indicator.setStyleSheet("""
+                QPushButton {
+                    border: none;
+                    font-size: 16px;
+                    color: #34a853;
+                    background: transparent;
+                }
+                QPushButton:hover {
+                    background: rgba(52, 168, 83, 0.2);
+                    border-radius: 6px;
+                }
+            """)
         elif url.startswith('http://'):
             self.ssl_indicator.setText("⚠")
-            self.ssl_indicator.setStyleSheet("QPushButton { border: none; font-size: 16px; color: #ea4335; }")
+            self.ssl_indicator.setStyleSheet("""
+                QPushButton {
+                    border: none;
+                    font-size: 16px;
+                    color: #ea4335;
+                    background: transparent;
+                }
+                QPushButton:hover {
+                    background: rgba(234, 67, 53, 0.2);
+                    border-radius: 6px;
+                }
+            """)
         else:
             self.ssl_indicator.setText("ℹ")
-            self.ssl_indicator.setStyleSheet("QPushButton { border: none; font-size: 16px; color: #4285f4; }")
+            self.ssl_indicator.setStyleSheet("""
+                QPushButton {
+                    border: none;
+                    font-size: 16px;
+                    color: #4a9eff;
+                    background: transparent;
+                }
+                QPushButton:hover {
+                    background: rgba(74, 158, 255, 0.2);
+                    border-radius: 6px;
+                }
+            """)
 
     def update_tab_title(self, title, tab):
         index = self.tabs.indexOf(tab)
