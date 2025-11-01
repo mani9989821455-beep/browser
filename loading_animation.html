@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kali Browser - Loading</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .loader-container {
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 72px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 40px;
+            letter-spacing: 8px;
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        .loader {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 40px;
+        }
+
+        .circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: #ffffff;
+            opacity: 0;
+        }
+
+        .loading-text {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 500;
+            opacity: 0;
+            letter-spacing: 2px;
+        }
+
+        .dots {
+            display: inline-block;
+        }
+
+        .dot {
+            display: inline-block;
+            margin: 0 2px;
+            opacity: 0;
+        }
+
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-shapes" id="shapes"></div>
+
+    <div class="loader-container">
+        <div class="logo">KALI</div>
+
+        <div class="loader">
+            <div class="circle circle1"></div>
+            <div class="circle circle2"></div>
+            <div class="circle circle3"></div>
+        </div>
+
+        <div class="loading-text">
+            LOADING<span class="dots">
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+            </span>
+        </div>
+    </div>
+
+    <script>
+        anime({
+            targets: '.logo',
+            opacity: [0, 1],
+            translateY: [-30, 0],
+            duration: 1200,
+            easing: 'easeOutExpo'
+        });
+
+        anime({
+            targets: '.circle1',
+            opacity: [0, 0.8],
+            scale: [0.8, 1],
+            rotate: '1turn',
+            duration: 2000,
+            easing: 'linear',
+            loop: true,
+            delay: 300
+        });
+
+        anime({
+            targets: '.circle2',
+            opacity: [0, 0.6],
+            scale: [0.6, 0.8],
+            rotate: '-1turn',
+            duration: 1500,
+            easing: 'linear',
+            loop: true,
+            delay: 400
+        });
+
+        anime({
+            targets: '.circle3',
+            opacity: [0, 0.4],
+            scale: [0.4, 0.6],
+            rotate: '1turn',
+            duration: 1800,
+            easing: 'linear',
+            loop: true,
+            delay: 500
+        });
+
+        anime({
+            targets: '.loading-text',
+            opacity: [0, 1],
+            translateY: [20, 0],
+            duration: 1000,
+            delay: 600,
+            easing: 'easeOutQuad'
+        });
+
+        anime({
+            targets: '.dot',
+            opacity: [0, 1],
+            duration: 400,
+            delay: anime.stagger(150, {start: 800}),
+            loop: true,
+            direction: 'alternate',
+            easing: 'easeInOutQuad'
+        });
+
+        const shapesContainer = document.getElementById('shapes');
+        for (let i = 0; i < 15; i++) {
+            const shape = document.createElement('div');
+            shape.className = 'shape';
+            const size = Math.random() * 200 + 50;
+            shape.style.width = size + 'px';
+            shape.style.height = size + 'px';
+            shape.style.left = Math.random() * 100 + '%';
+            shape.style.top = Math.random() * 100 + '%';
+            shapesContainer.appendChild(shape);
+
+            anime({
+                targets: shape,
+                translateY: [
+                    { value: Math.random() * 100 - 50, duration: Math.random() * 3000 + 2000 }
+                ],
+                translateX: [
+                    { value: Math.random() * 100 - 50, duration: Math.random() * 3000 + 2000 }
+                ],
+                opacity: [
+                    { value: Math.random() * 0.2, duration: Math.random() * 2000 + 1000 }
+                ],
+                easing: 'easeInOutSine',
+                loop: true,
+                direction: 'alternate',
+                delay: Math.random() * 1000
+            });
+        }
+    </script>
+</body>
+</html>

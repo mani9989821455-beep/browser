@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kali Browser - Welcome</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            opacity: 0;
+        }
+
+        .logo {
+            font-size: 96px;
+            font-weight: 700;
+            letter-spacing: 12px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffffff, #a8d8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 24px;
+            font-weight: 300;
+            opacity: 0.9;
+            letter-spacing: 2px;
+        }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto 80px;
+            opacity: 0;
+        }
+
+        .search-box {
+            display: flex;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 16px 24px;
+            font-size: 18px;
+            color: #ffffff;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-button {
+            background: linear-gradient(45deg, #4285f4, #34a853);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 40px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(66, 133, 244, 0.4);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            font-size: 15px;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            opacity: 0;
+        }
+
+        .quick-link {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">KALI</div>
+            <div class="tagline">Secure. Fast. Beautiful.</div>
+        </header>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input
+                    type="text"
+                    class="search-input"
+                    placeholder="Search or enter URL..."
+                    id="searchInput"
+                >
+                <button class="search-button" onclick="performSearch()">Browse</button>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Secure Browsing</div>
+                <div class="feature-description">
+                    Enhanced security with HTTPS enforcement, URL validation, and sandboxed content protection.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">Lightning Fast</div>
+                <div class="feature-description">
+                    Powered by QtWebEngine for blazing fast page loads and smooth performance.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-title">Modern Design</div>
+                <div class="feature-description">
+                    Beautiful, intuitive interface with smooth animations and elegant transitions.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <div class="feature-title">Rich Media</div>
+                <div class="feature-description">
+                    Full support for all video and image formats via native rendering engine.
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <a href="https://www.google.com" class="quick-link">Google</a>
+            <a href="https://www.youtube.com" class="quick-link">YouTube</a>
+            <a href="https://github.com" class="quick-link">GitHub</a>
+            <a href="https://www.wikipedia.org" class="quick-link">Wikipedia</a>
+            <a href="https://www.reddit.com" class="quick-link">Reddit</a>
+        </div>
+    </div>
+
+    <footer>
+        Kali Browser &copy; 2025 - Your Gateway to the Web
+    </footer>
+
+    <script>
+        anime({
+            targets: 'header',
+            opacity: [0, 1],
+            translateY: [-50, 0],
+            duration: 1200,
+            easing: 'easeOutExpo'
+        });
+
+        anime({
+            targets: '.search-container',
+            opacity: [0, 1],
+            scale: [0.8, 1],
+            duration: 1000,
+            delay: 300,
+            easing: 'easeOutElastic(1, .8)'
+        });
+
+        anime({
+            targets: '.feature-card',
+            opacity: [0, 1],
+            translateY: [30, 0],
+            duration: 800,
+            delay: anime.stagger(100, {start: 600}),
+            easing: 'easeOutQuad'
+        });
+
+        anime({
+            targets: '.quick-links',
+            opacity: [0, 1],
+            translateY: [20, 0],
+            duration: 800,
+            delay: 1200,
+            easing: 'easeOutQuad'
+        });
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) {
+                if (query.includes('.') && !query.includes(' ')) {
+                    if (!query.match(/^https?:\/\//)) {
+                        window.location.href = 'https://' + query;
+                    } else {
+                        window.location.href = query;
+                    }
+                } else {
+                    window.location.href = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+                }
+            }
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('focus', function() {
+            anime({
+                targets: '.search-box',
+                scale: 1.02,
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        });
+
+        searchInput.addEventListener('blur', function() {
+            anime({
+                targets: '.search-box',
+                scale: 1,
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        });
+    </script>
+</body>
+</html>
